@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="temp">
+	<!--전체학생 정보조회 -->
+	<select id="getAllStudent" resultType="Map">
+		select id, name, call_cnt from student
+	</select>
+	
+	<!-- 학생등록 -->
+	<insert id="insertStudent" parameterType="Map">
+		INSERT INTO STUDENT (ID , NAME, CALL_CNT) VALUES(#{id}, #{name} ,#{call_cnt})
+	</insert>
+</mapper>

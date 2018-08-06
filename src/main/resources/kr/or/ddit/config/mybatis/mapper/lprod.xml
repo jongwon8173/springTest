@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="lprodxml">
+	
+	<!-- 07.11 상품대분류 전체 조회  -->
+	<select id="selectAllLprod" resultType="LprodVo">
+	 SELECT * FROM lprod
+	</select>
+	
+	 
+    <!--상품대분류 정보 페이징 조회 page : 값 -페이지의 수(번호)  / pageSize : value -한페이지에 나오는 정보의 개수지정(만들어줘야함) 가져와서 처리     -->
+    <select id="getLprodPageList"   resultType="LprodVo"  parameterType="map">
+		SELECT *
+		FROM
+			(SELECT a.*, ROWNUM AS rn
+				FROM
+					(SELECT *
+						FROM lprod
+					ORDER BY lprod_gu) a )
+		WHERE rn BETWEEN ( ( #{page}-1 ) * #{pageSize} ) +1  AND  #{page} * #{pageSize}
+	</select>
+	
+	
+	
+	<!--07.11  -->
+	<!-- 상품대분류 전체 건수 조회   -->
+	<select id="getLprodTotalCnt" resultType="int">
+		select count(*) from lprod
+	</select>
+	
+	
+	<!--상품대분류정보조회 -->
+	<select id="getLprod" resultType="LprodVo"
+		parameterType="LprodVo">
+		select * from lprod where lprod_id = #{lprod_id}
+		<!-- select * from student where id = #{id} and name=#{name} and call_cnt=#{call_cnt} -->
+	</select>
+
+
+
+</mapper>

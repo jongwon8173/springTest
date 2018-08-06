@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
+
+	<!-- aspect 선언 -->
+	<bean id="profileAspect" class="kr.or.ddit.aop.ProfileAspect" />
+
+	<aop:config>
+		<!-- aop:pointcut의 expression(옵션)의 지정 경로에 따라서 적용 범위를 크게 하거나 작게 할수 있음! -->
+		<aop:pointcut expression="execution(* kr.or.ddit..*.*(..))" id="allMethod" />   <!-- For example : 'execution(* com.xyz.myapp.service.*.*(..))' -->
+		<aop:aspect ref="profileAspect">
+			<aop:before method="beforeMethod" pointcut-ref="allMethod" />
+			<aop:after  method="afterMethod"  pointcut-ref="allMethod" />
+			<aop:around method="aroundMethod" pointcut-ref="allMethod" />
+		</aop:aspect>
+	</aop:config>
+
+</beans>

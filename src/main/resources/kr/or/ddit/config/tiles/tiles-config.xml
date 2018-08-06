@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+	<!-- 부모 -->
+	<definition name="basicLayout" template="/WEB-INF/views/tiles/basicLayout.jsp">
+		<put-attribute name="top" value="/WEB-INF/views/tiles/top.jsp" />
+		<put-attribute name="left" value="/WEB-INF/views/tiles/left.jsp" />
+		<put-attribute name="content" value="" />
+	</definition>
+
+	<!-- 상속받은 자식 ,재정의해서 사용 -->
+	<definition name="main" extends="basicLayout">
+		<put-attribute name="content" value="/WEB-INF/views/tilesMain.jsp" />
+	</definition>
+
+	<definition name="studentList" extends="basicLayout">
+		<put-attribute name="content" value="/WEB-INF/views/student/tilesList.jsp" />
+	</definition>
+
+	<definition name="studentDetail" extends="basicLayout">
+		<put-attribute name="content" value="/WEB-INF/views/student/tilesDetail.jsp" />
+	</definition>
+</tiles-definitions>
+
+
+
+
+
+<!-- 해보기 kr.or.ddit.mvc.TilesController 만들고 url : localhost:8180/tiles/main 
+	보냈을떄 public String tilesMain(){ 타도록 return ""; //tiles definition name } -->
+
+<!-- StudentController 메소드 추가 
+
+기존: /student/list (list.jsp) , /student/detail (detail.jsp) 
+추가 : /student/tiles/list (tilesList.jsp)  /student/tiles/detail (tilesDetail.jsp) 
+
+( tiles-config.xml studentList , studentDetail definition 
+	추가 및 jsp 분리작업 진행 (top, left 는 /WEB-INF/views/tiles/top, left.jsp" 활용 ) -->

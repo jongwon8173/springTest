@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+	<!-- 
+		Spring 에서 관리할 bean 을 선언(등록) 하고 
+		bean을 만드는 방법을 관리한다.
+		
+		IocService 객체 : boardDao 가 설정된 객체
+		(IocServlice 내부에서 IocDao를 별도로 선언하지 않는)
+		
+		IocServiceInf iocService = new IocService();
+		IocDaoInf iocDao = new IocDao();
+		
+		kr.or.ddit.ioc.dao, interface, class
+		kr.or.ddit.ioc.service, interface, class
+     -->
+     	<!-- id는 개발자가 관리 일반적으로 는 클래스명을 사용 -->
+<!--      	<bean id="iocDao" class="kr.or.ddit.ioc.dao.IocDao"/> -->
+     	
+     	<!-- 생성자를 통한 주입 -->
+		<bean id="iocService" class="kr.or.ddit.ioc.service.IocService">
+			<constructor-arg ref="iocDao"/>
+		</bean>
+		
+		<bean id="iocSetterService" class="kr.or.ddit.ioc.service.IocService">
+			<property name="iocDao" ref="iocDao"/>
+		</bean>
+		
+		<!-- 
+			design pattern - singleton : jvm 에서 특정 클래스의 객체를 하나만 생성
+			spring ioc - signleton : 스프링 bean id당 하나의 객체를 생성
+		 -->
+		<bean id="iocDao" class="kr.or.ddit.ioc.dao.IocDao" scope="singleton"/>
+		<bean id="iocDao2" class="kr.or.ddit.ioc.dao.IocDao" scope="singleton"/>
+
+		<!-- 
+			prototype test를 스프링 빈
+			prototype spring bean은 DL를 할때마나 새로운 빈을 생성하여 리턴한다.
+		 -->		
+		<bean id="iocPrototypeDao" class="kr.or.ddit.ioc.dao.IocDao" scope="prototype"/>
+
+		<!-- 
+			singleton scope 스프링 빈(iocSinlgtonService)에
+			prototype scope 스프링 빈(iocPrototypeDao)를 주입하면
+			주입받은 빈의 상태는 ??
+		 -->		
+		<bean id="iocSingLetonService" class="kr.or.ddit.ioc.service.IocService" scope="singleton">
+			<property name="iocDao" ref="iocPrototypeDao"/>
+		</bean>
+		
+</beans>
